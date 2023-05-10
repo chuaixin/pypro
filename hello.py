@@ -4,7 +4,12 @@
 #from PyMySQL import *
 import pymysql
 
-conn = connect(host='localhost',user='root',password='cx007928',database='hellodb',charset='utf8')
+conn = pymysql.connect(
+    host='localhost',
+    user='root',
+    password='cx007928',
+    database='hellodb',
+    charset='utf8')
 
 try:
     cur=conn.cursor()

@@ -1,6 +1,9 @@
 #!/usr/bin/python3
+# coding=utf-8
 # filename  hello.py
 
+import sys
+print(sys.version)
 import pymysql
  
 # 连接数据库，创建连接对象connection
