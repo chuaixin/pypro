@@ -1,9 +1,8 @@
 #!/usr/bin/python3
 # filename  hello.py
+#from PyMySQL import
 
-#from PyMySQL import *
 import pymysql
-
 conn = pymysql.connect(
     host='localhost',
     user='root',
@@ -14,13 +13,18 @@ conn = pymysql.connect(
 try:
     cur=conn.cursor()
     # insertsql=insert into TestModel_test(id,name) values ('','jimbo')
+    createsql = '''
+        CREATE TABLE `entries` (
+            `id` int(11) NOT NULL AUTO_INCREMENT,
+            `title` varchar(12) NOT NULL,
+            `text` varchar(12) NOT NULL DEFAULT '请输入',
+            PRIMARY KEY (`id`)
+        );'''
 
-    cur.execute('select * from TestModel_test')
+    cur.execute( createsql )
     # conn.commit()
-    res=cur.fetchall()
-    for item in res:
-        print('ID;{0} name{1}'.format(item[1],item[3]))
-    print(res)
+
+    print ("create ok")
     #print('sucess')
 except Exception as ex:
     print(ex)
