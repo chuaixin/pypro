@@ -60,7 +60,7 @@ for dept_rep in dept:
 '''
 # ====================================
 # 查询系统代码库入库量
-
+'''
 for dept_rep in dept:
     sql_sc_project_id = "select dept_name,project_key,id from kh_project where category=1 and dept_name='%s'" %dept_rep 
     dept_rep_y = 0
@@ -82,7 +82,7 @@ for dept_rep in dept:
     except Exception:
         print("查询失败")
     print(data[0],"代码库项目数",dept_rep_y,"无代码库项目数",dept_rep_n)
-
+'''
 # ====================================
 # 查询系统是否已做关联产品
 # for dept_rep in dept:
@@ -139,10 +139,10 @@ for dept_rep in dept:
 
 # ====================================
 # 查询各项目代码提交数据
-'''
+
 for dept_rep in dept:
-    sql_sc_project_id = "select dept_name,project_key,id from kh_project where category=1 and dept_name='%s'" %dept_rep #系统项目
-    # sql_sc_project_id = "select dept_name,project_key,id from kh_project where category=2 and dept_name='%s'" %dept_rep #产品项目
+    # sql_sc_project_id = "select dept_name,project_key,id from kh_project where category=1 and dept_name='%s'" %dept_rep #系统项目
+    sql_sc_project_id = "select dept_name,project_key,id from kh_project where category=2 and dept_name='%s'" %dept_rep #产品项目
     dept_rep_y = 0 #部门项目有效计数器
     dept_rep_n = 0 #部门项目无效计数器
     commit_pro = 0
@@ -182,7 +182,7 @@ for dept_rep in dept:
 
     except Exception:
         print("查询失败")
-'''
+
 
 
 # 关闭光标对象
