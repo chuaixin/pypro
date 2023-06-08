@@ -2,10 +2,68 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>效能统计</title>
 </head>
 <body>
-<p>User id is {{ user }}</p>
-<p>User name is {{ user }}</p>
+<p>
+
+<table width="900px" border='1px'>
+
+    <tr align="center">
+        <td>系统纳管总数</td>
+        <td>数字化运营</td>
+        <td>智能运营</td>
+        <td>云网运营</td>
+        <td>技术中台</td>
+        <td>通讯运营</td>
+        <td>短信支撑</td>
+    </tr>
+    <tr align="center">
+        <td></td>
+    {% for k,v in sys_total.items() %}
+        <td>{{ v }}个</td>
+    {% endfor %}     
+    </tr>
+
+    <tr align="center">
+        <td>产品纳管总数</td>
+        <td>数字化运营</td>
+        <td>智能运营</td>
+        <td>云网运营</td>
+        <td>技术中台</td>
+        <td>通讯运营</td>
+        <td>短信支撑</td>
+    </tr>
+    <tr align="center">
+        <td></td>
+    {% for k,v in product_total.items() %}
+        <td>{{ v }}个</td>
+    {% endfor %}     
+    </tr>
+
+    <tr align="center">
+        <td>产品纳管总数</td>
+        <td>数字化运营</td>
+        <td>智能运营</td>
+        <td>云网运营</td>
+        <td>技术中台</td>
+        <td>通讯运营</td>
+        <td>短信支撑</td>
+    </tr>
+    <tr align="center">
+        <td></td>
+    {% for k,v in product_total.items() %}
+        <td>{{ v }}个</td>
+    {% endfor %}     
+    </tr>
+</table>
+
+{% for k,v in sys_detail.items() %}
+    <p>{{ v }}</p>
+{% endfor %}    
+
+
+</p>
+
 </body>
 </html>
