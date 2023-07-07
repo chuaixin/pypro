@@ -8,7 +8,9 @@
 
 import pymysql
 import sys
+import json
 from khan_dev_data import *
+
 
 # 按部门查询系统项目数 
 print("\n【按部门查询系统项目数】：\n==============================================")
@@ -22,6 +24,7 @@ for dname in dept:
     print("明细：", get_project_by_dept("产品项目", dname))
     print("\n")
 
+    
     repo_dept_new = get_project_repository_by_dept("产品项目", dname, 'new')
     repo_dept_old = get_project_repository_by_dept("产品项目", dname, 'old')
     repcount = 0
@@ -66,19 +69,19 @@ for dname in dept:
     print("未绑定产品的系统项目明细：",nodepend_list)
     print("\n")
 
-    depend_product = get_project_relate_by_dept("产品项目", dname)
-    repcount_no = 0
-    repcount_yes = 0
-    nodepend_list = []
-    for repdata in depend_product:
-        if not repdata[4]:
-            repcount_no += 1
-            nodepend_list.append(repdata)
-        else:
-            repcount_yes += 1
-    print("产品项目已绑定产品项目数：", repcount_yes, "未绑定产品的项目数", repcount_no)
-    print("未绑定产品的产品项目明细：",nodepend_list)
-    print("\n")
+    # depend_product = get_project_relate_by_dept("产品项目", dname)
+    # repcount_no = 0
+    # repcount_yes = 0
+    # nodepend_list = []
+    # for repdata in depend_product:
+    #     if not repdata[4]:
+    #         repcount_no += 1
+    #         nodepend_list.append(repdata)
+    #     else:
+    #         repcount_yes += 1
+    # print("产品项目已绑定产品项目数：", repcount_yes, "未绑定产品的项目数", repcount_no)
+    # print("未绑定产品的产品项目明细：",nodepend_list)
+    # print("\n")
 
     job_product = get_project_job_by_dept("产品项目", dname)
     sum_job = 0
@@ -171,7 +174,7 @@ for dname in dept:
 
 
 
-    break
+    # break
 
 
 			

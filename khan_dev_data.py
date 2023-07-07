@@ -18,9 +18,9 @@ def get_project_by_dept(ptype, deptname=''):
     projecttype = {"系统项目":1, "产品项目":2, "历史项目":4, "其他项目":3}
 
     if deptname:
-        sql_sys = "select dept_name,project_key,id,name,liable_user_name from kh_project where category={0} and (status=1 or status=2) and dept_name='{1}'".format(projecttype[ptype],deptname)
+        sql_sys = "select dept_name,project_key,id,name,liable_user_name,progress_status from kh_project where category={0} and (status=1 or status=2) and dept_name='{1}'".format(projecttype[ptype],deptname)
     else:
-        sql_sys = "select dept_name,project_key,id,name,liable_user_name from kh_project where category={0} and (status=1 or status=2) order BY dept_name".format(projecttype[ptype])
+        sql_sys = "select dept_name,project_key,id,name,liable_user_name,progress_status from kh_project where category={0} and (status=1 or status=2) order BY dept_name".format(projecttype[ptype])
     try:
         cursor = conn.cursor()
         cursor.execute(sql_sys)
@@ -92,7 +92,7 @@ def get_project_job_by_dept(ptype, deptname):
     newplist =[]
 
     for pdata in productlist:
-        sql_sc_repository_id = "select count(*) FROM kh_project_function where project_id=%s AND create_time>'2023-04-15'" % pdata[2]
+        sql_sc_repository_id = "select count(*) FROM kh_project_function where project_id=%s AND create_time>'2023-06-01'" % pdata[2]
         try:
             cursor.execute(sql_sc_repository_id)
             count_job = cursor.fetchone()
@@ -123,12 +123,13 @@ def get_project_codecommit_by_dept(ptype, deptname, producttype=''):
             print(e)
         #通过代码库id查询提交代码次数
         for reps_id in result_repository:
-            sql_sc_repository_commit = "select count(*) from kh_gitlab_statistical_commits where repository_id=%s AND committer_time>'2023-04-15'" % reps_id[0]
+            sql_sc_repository_commit = "select count(*) from kh_gitlab_statistical_commits where repository_id=%s AND committer_time>'2023-06-01'" % reps_id[0]
             cursor.execute(sql_sc_repository_commit)
             result_commit = cursor.fetchone()
             project_sum_commit+=result_commit[0] #项目代码库提交累加数
 
         pdatalist = (pdata[1],pdata[2],pdata[3],pdata[4],project_sum_commit)
+        project_sum_commit = 0
         if ptype=='产品项目' and producttype=='new': #产品项目判断
             if pdata[1] in newproduct:
                 newplist.append(pdatalist) #新产品
@@ -144,12 +145,23 @@ def get_project_info(projectID):
     project_info = {}
     project_commit_times =0
     project_commit_count =0
-    sql_sys = "select id,name,project_key,category,status,liable_user_name from kh_project where id={0}".format(projectID)
+    sql_sys = "select id,name,project_key,category,status,liable_user_name,progress_status from kh_project where id={0}".format(projectID)
     try:
         cursor = conn.cursor()
         cursor.execute(sql_sys)
         result = cursor.fetchone()
-        project_info = {'id':result[0],'name':result[1],'project_key':result[2],'category':project_type[result[3]],'status':project_status[result[4]],'liable_user_name':result[5]}
+        project_info = {'项目名称':result[1],'项目标识':result[2],'项目ID':result[0],'项目类型':project_type[result[3]],'项目状态':project_status[result[4]],'项目经理':result[5],'项目执行状态':progress_status[result[6]]}
+
+        #读取该项目的项目成员
+        sql_members = "select ACCOUNT_ from kh_project_member where project_id=%s" % projectID
+        cursor.execute(sql_members)
+        member_list = []
+        result = cursor.fetchall()
+        for member in result:
+            if not (member[0] in ignore_member):
+                member_list.append(member[0])
+            
+        project_info['团队成员'] = member_list
 
         #读取该项目的产品及版本依赖
         sql_depend_id = "select depend_project_id,depend_version_id from kh_project_dependency where project_id=%s" % projectID
@@ -167,7 +179,7 @@ def get_project_info(projectID):
                 cursor.execute(sql_version)
                 result_version = cursor.fetchone()
                 depend_list.append([result_version[0]])
-        project_info['depend_list'] = depend_list
+        project_info['产品依赖'] = depend_list
 
         #读取该项目的代码库
         sql_repository_id = "select repository_id from kh_project__repository where project_id=%s" % projectID
@@ -176,7 +188,7 @@ def get_project_info(projectID):
         repo_list = []
         for repo_id in result:
             #通过代码库id查询提交代码次数
-            sql_sc_repository_commit = "select repository_id,count(total),CAST(SUM(total) AS SIGNED) from kh_gitlab_statistical_commits where repository_id=%s AND committer_time>'2023-04-15'" % repo_id[0]
+            sql_sc_repository_commit = "select repository_id,count(total),CAST(SUM(total) AS SIGNED) from kh_gitlab_statistical_commits where repository_id=%s AND committer_time>'2023-06-01'" % repo_id[0]
             cursor.execute(sql_sc_repository_commit)
             result_commit = cursor.fetchone()
             project_commit_times = project_commit_times+result_commit[1] #项目代码库提交累加数
@@ -190,7 +202,7 @@ def get_project_info(projectID):
 
 
         #读取该项目的任务创建
-        sql_job = "select count(*) FROM kh_project_function where project_id=%s AND create_time>'2023-05-15'" % projectID
+        sql_job = "select count(*) FROM kh_project_function where project_id=%s AND create_time>'2023-06-01'" % projectID
         cursor.execute(sql_job)
         result_job = cursor.fetchone()
         project_info['job_count'] = result_job[0]
@@ -203,5 +215,5 @@ def get_project_info(projectID):
     conn.close()
     return project_info
 
-
+# print(json.dumps(get_project_info(107),indent=4,ensure_ascii=False))
 
