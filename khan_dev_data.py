@@ -7,7 +7,7 @@
 
 import pymysql
 import sys
-import json
+# import json
 from khan_config import *
 
 # ====================================
@@ -215,5 +215,5 @@ def get_project_info(projectID):
     conn.close()
     return project_info
 
-# print(json.dumps(get_project_info(107),indent=4,ensure_ascii=False))
+# print(json.dumps(get_project_info(1010),indent=4,ensure_ascii=False))
 
