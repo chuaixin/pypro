@@ -7,7 +7,7 @@
 
 import pymysql
 import sys
-# import json
+import json
 from khan_config import *
 
 # ====================================
@@ -18,9 +18,9 @@ def get_project_by_dept(ptype, deptname=''):
     projecttype = {"系统项目":1, "产品项目":2, "历史项目":4, "其他项目":3}
 
     if deptname:
-        sql_sys = "select dept_name,project_key,id,name,liable_user_name,progress_status from kh_project where category={0} and (status=1 or status=2) and dept_name='{1}'".format(projecttype[ptype],deptname)
+        sql_sys = "select id,dept_name,project_key,name,liable_user_name,progress_status from kh_project where category={0} and (status=1 or status=2) and dept_name='{1}'".format(projecttype[ptype],deptname)
     else:
-        sql_sys = "select dept_name,project_key,id,name,liable_user_name,progress_status from kh_project where category={0} and (status=1 or status=2) order BY dept_name".format(projecttype[ptype])
+        sql_sys = "select id,dept_name,project_key,name,liable_user_name,progress_status from kh_project where category={0} and (status=1 or status=2) order BY dept_name".format(projecttype[ptype])
     try:
         cursor = conn.cursor()
         cursor.execute(sql_sys)
@@ -153,13 +153,13 @@ def get_project_info(projectID):
         project_info = {'项目名称':result[1],'项目标识':result[2],'项目ID':result[0],'项目类型':project_type[result[3]],'项目状态':project_status[result[4]],'项目经理':result[5],'项目执行状态':progress_status[result[6]]}
 
         #读取该项目的项目成员
-        sql_members = "select ACCOUNT_ from kh_project_member where project_id=%s" % projectID
+        sql_members = "select ACCOUNT_,NAME_,DIC.`name` from kh_project_member AS PROJ JOIN kh_dict AS DIC ON PROJ.project_id=%s AND PROJ.`STATUS_`=1 AND PROJ.ROLE_ID = DIC.id" % projectID
         cursor.execute(sql_members)
-        member_list = []
+        member_list = {}
         result = cursor.fetchall()
         for member in result:
             if not (member[0] in ignore_member):
-                member_list.append(member[0])
+                member_list[member[0]]=member[2]
             
         project_info['团队成员'] = member_list
 
@@ -206,6 +206,86 @@ def get_project_info(projectID):
         cursor.execute(sql_job)
         result_job = cursor.fetchone()
         project_info['job_count'] = result_job[0]
+
+    except Exception as e:
+        print(e)
+    # 关闭光标对象
+    cursor.close()
+    # 关闭数据库连接
+    conn.close()
+    return project_info
+
+#项目团队成员及角色信息
+def get_project_memeber(projectID):
+    conn = pymysql.connect(**conn_khan)
+    member_list = {}
+    sql_members = "select ACCOUNT_,NAME_,DIC.`name` from kh_project_member AS PROJ JOIN kh_dict AS DIC ON PROJ.project_id=%s AND PROJ.`STATUS_`=1 AND PROJ.ROLE_ID = DIC.id" % projectID
+    try:
+        cursor = conn.cursor()
+        #读取该项目的项目成员
+        cursor.execute(sql_members)
+
+        result = cursor.fetchall()
+        for member in result:
+            if not (member[0] in ignore_member):
+                member_list[member[0]]=member[2]
+        
+    except Exception as e:
+        print(e)
+    # 关闭光标对象
+    cursor.close()
+    # 关闭数据库连接
+    conn.close()
+    return member_list
+
+# 获取项目版本及版本产品依赖信息
+def get_project_related(projectID):
+    conn = pymysql.connect(**conn_khan)
+    project_info = {}
+
+    try:
+        cursor = conn.cursor()
+        #读取该项目的版本数据
+        sql_depend_id = "select kv.`name`,kv.`id`,kdic.`name` from kh_project_version AS kv JOIN kh_dict as kdic where project_id=%s AND kv.version_type=kdic.id" % projectID
+        cursor.execute(sql_depend_id)
+        result = cursor.fetchall()
+        vers_list = {}
+        for version_info in result:
+            sql_version = "select pv.project_version_id,khpro.name,khpro.project_key,pv.depend_project_id,pv.official_version,pv.upgrade_pack,pv.patch_pack FROM kh_project_version_dependency AS pv join kh_project AS khpro ON pv.project_version_id={0} AND khpro.id=pv.depend_project_id".format(version_info[1])
+            print(sql_version)
+            cursor.execute(sql_version)
+            result_version = cursor.fetchall()
+            if len(result_version)==0:
+                vers_list[version_info[0]]='' #将为空的版本信息加入字典
+            else:
+                vers_depend_list = []
+                # 根据版本数据统计该版本下依赖的版本
+                for vers_depend in result_version:
+                    
+                    # 添加主版本
+                    if vers_depend[4] is not None:
+                        print("official",vers_depend[4])
+                        vers_depend_list.append(vers_depend[4])
+                    # 添加升级包版本
+                    if vers_depend[5] is not None:
+                        vers_upgrade = vers_depend[5].split(";&")
+                        vers_upgrade = list(filter(None, vers_upgrade))
+                        print("upgrade".vers_upgrade)
+                        vers_depend_list.extend(vers_upgrade)
+                    # 添加补丁包版本
+                    if vers_depend[6] is not None:
+                        vers_patch = vers_depend[6].split(";&")
+                        vers_patch = list(filter(None, vers_patch))
+                        vers_depend_list.extend(vers_patch)
+                print(vers_depend_list)
+                
+                vers_list[version_info[0]]=vers_depend_list
+                # vers_depend_list.clear()
+
+
+                    # print(vers_depend)  
+
+        project_info['产品依赖'] = vers_list
 
     except Exception as e:
         print(e)
