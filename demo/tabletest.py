@@ -8,12 +8,10 @@
 from prettytable import PrettyTable
 import pandas as pd
 
-
-
 #创建Prettytable实例
 tb = PrettyTable()
 #添加表头
-tb.field_names = ['userId', 'name', 'sex', 'age', 'job']
+tb.field_names = ['项目ID', '负责人', '项目名称', '英文名', '依赖产品']
 #添加行
 tb.add_row(['123', '张三', '男', '25', 'softtest'])
 tb.add_row(['124', '李四', '男', '25', 'Java'])
@@ -32,13 +30,19 @@ print(tb)
 
 
 
-# 数据
-data = {'姓名': ['张三', '李四', '王五'],
-        '年龄': [25, 30, 35],
-        '性别': ['男', '女', '男']}
 
-# 创建DataFrame
+# 创建数据
+data = {
+    'Name': ['Alice', 'Bob', 'Charlie', 'arlie'],
+    'Age': [25, 30, 22, 22],
+    'City': ['New York', 'London', 'Paris', 'London']
+}
+
 df = pd.DataFrame(data)
-print(df)
-# 生成报表
-# df.to_excel('report.xlsx', index=False)
+
+# 导出到 Excel 文件
+resultPath= "C:/py_gitwork/pypro/demo/output.xlsx"
+df.to_excel(resultPath,sheet_name="sheet1",index = False,na_rep = 0,inf_rep = 0)#生成名为数据表1的excel文件
+
+# df.to_excel('C:/py_gitwork/pypro/demo/output.xlsx', index=False)
+
