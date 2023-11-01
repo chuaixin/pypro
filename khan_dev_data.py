@@ -8,6 +8,9 @@
 import pymysql
 import sys
 import json
+import pandas as pd
+from prettytable import PrettyTable
+import re
 from khan_config import *
 
 # ====================================
@@ -18,16 +21,16 @@ def get_project_by_dept(ptype, deptname=''):
     projecttype = {"系统项目":1, "产品项目":2, "历史项目":4, "其他项目":3}
 
     if deptname:
-        sql_sys = "select id,dept_name,project_key,name,liable_user_name,progress_status from kh_project where category={0} and (status=1 or status=2) and dept_name='{1}'".format(projecttype[ptype],deptname)
+        sql_sys = "select id,dept_name,project_key,name,liable_user_name,progress_status,province,trade,customer_abbreviated from kh_project where category={0} and (status=1 or status=2) and dept_name='{1}'".format(projecttype[ptype],deptname)
     else:
-        sql_sys = "select id,dept_name,project_key,name,liable_user_name,progress_status from kh_project where category={0} and (status=1 or status=2) order BY dept_name".format(projecttype[ptype])
+        sql_sys = "select id,dept_name,project_key,name,liable_user_name,progress_status,province,trade,customer_abbreviated from kh_project where category={0} and (status=1 or status=2) order BY dept_name".format(projecttype[ptype])
     try:
         cursor = conn.cursor()
         cursor.execute(sql_sys)
         result = cursor.fetchall()
         for data in result:
-            # print (data)
-            sys_list.append(data)
+            sys_info = (data[0],data[1],data[2],data[3],data[4],progress_status[data[5]],data[6],data[7],data[8])
+            sys_list.append(sys_info)
     except Exception as e:
         print(e)
     # 关闭光标对象
@@ -35,73 +38,6 @@ def get_project_by_dept(ptype, deptname=''):
     # 关闭数据库连接
     conn.close()
     return sys_list
-# ====================================
-# 按部门查询系统和产品是否已有代码库 pytype-项目类型，deptname-部门名称，producttype-产品类型（新产品或维护中产品）
-def get_project_repository_by_dept(ptype, deptname, producttype=''):
-    productlist = get_project_by_dept(ptype, deptname)
-    conn = pymysql.connect(**conn_khan)
-    cursor = conn.cursor()
-    newplist=[]
-    
-    for pdata in productlist:
-        sql_sc_repository_id = "select project_id,count(repository_id) from kh_project__repository where project_id=%s" % pdata[2]
-        #根据项目英文名查询代码库数量
-        try:
-            cursor.execute(sql_sc_repository_id)
-            count_repository = cursor.fetchone()
-        except Exception as e:
-            print(e)
-        pdatalist = (pdata[1],pdata[2],pdata[3],pdata[4],count_repository[1])
-        if ptype=='产品项目' and producttype=='new': #产品项目判断
-            if pdata[1] in newproduct:
-                newplist.append(pdatalist) #新产品
-        elif ptype=='产品项目' and producttype=='old':
-            if not (pdata[1] in newproduct):
-                newplist.append(pdatalist) #新产品
-        else:
-            newplist.append(pdatalist)
-    return newplist
-
-# ====================================
-# 按部门查询系统和产品管理产品数 pytype-项目类型，deptname-部门名称，producttype-产品类型（新产品或维护中产品）
-def get_project_relate_by_dept(ptype, deptname):
-    productlist = get_project_by_dept(ptype, deptname)
-    conn = pymysql.connect(**conn_khan)
-    cursor = conn.cursor()
-    newplist =[]
-
-    for pdata in productlist:
-        sql_sc_repository_id = "select count(depend_project_id) from kh_project_dependency where project_id=%s" % pdata[2]
-        try:
-            cursor.execute(sql_sc_repository_id)
-            count_depend = cursor.fetchone()
-        except Exception as e:
-            print(e)
-        pdatalist = (pdata[1],pdata[2],pdata[3],pdata[4],count_depend[0])
-        newplist.append(pdatalist)
-
-    return newplist
-
-
-# ====================================
-# 按部门查询系统和产品任务创建数据
-def get_project_job_by_dept(ptype, deptname):
-    productlist = get_project_by_dept(ptype, deptname)
-    conn = pymysql.connect(**conn_khan)
-    cursor = conn.cursor()
-    newplist =[]
-
-    for pdata in productlist:
-        sql_sc_repository_id = "select count(*) FROM kh_project_function where project_id=%s AND create_time>'2023-06-01'" % pdata[2]
-        try:
-            cursor.execute(sql_sc_repository_id)
-            count_job = cursor.fetchone()
-        except Exception as e:
-            print(e)
-        pdatalist = (pdata[1],pdata[2],pdata[3],pdata[4],count_job[0])
-        newplist.append(pdatalist)
-
-    return newplist
 
 # ====================================
 # 按部门查询系统和产品代码提交次数 pytype-项目类型，deptname-部门名称，producttype-产品类型（新产品或维护中产品）
@@ -152,54 +88,6 @@ def get_project_info(projectID):
         result = cursor.fetchone()
         project_info = {'项目名称':result[1],'项目标识':result[2],'项目ID':result[0],'项目类型':project_type[result[3]],'项目状态':project_status[result[4]],'项目经理':result[5],'项目执行状态':progress_status[result[6]]}
 
-        #读取该项目的项目成员
-        sql_members = "select ACCOUNT_,NAME_,DIC.`name` from kh_project_member AS PROJ JOIN kh_dict AS DIC ON PROJ.project_id=%s AND PROJ.`STATUS_`=1 AND PROJ.ROLE_ID = DIC.id" % projectID
-        cursor.execute(sql_members)
-        member_list = {}
-        result = cursor.fetchall()
-        for member in result:
-            if not (member[0] in ignore_member):
-                member_list[member[0]]=member[2]
-            
-        project_info['团队成员'] = member_list
-
-        #读取该项目的产品及版本依赖
-        sql_depend_id = "select depend_project_id,depend_version_id from kh_project_dependency where project_id=%s" % projectID
-        cursor.execute(sql_depend_id)
-        result = cursor.fetchall()
-        depend_list = []
-        for depend_id,version_id in result:
-            if version_id:
-                sql_version = "select v.name,v.project_id ,v.id ,p.project_key from kh_version as v, kh_project as p where v.id={0} and v.project_id={1} and p.id={2}".format(version_id,depend_id,depend_id)
-                cursor.execute(sql_version)
-                result_version = cursor.fetchone()
-                depend_list.append([result_version[3],result_version[0]])
-            else:
-                sql_version = "select project_key from kh_project where id={0}".format(depend_id)
-                cursor.execute(sql_version)
-                result_version = cursor.fetchone()
-                depend_list.append([result_version[0]])
-        project_info['产品依赖'] = depend_list
-
-        #读取该项目的代码库
-        sql_repository_id = "select repository_id from kh_project__repository where project_id=%s" % projectID
-        cursor.execute(sql_repository_id)
-        result = cursor.fetchall()
-        repo_list = []
-        for repo_id in result:
-            #通过代码库id查询提交代码次数
-            sql_sc_repository_commit = "select repository_id,count(total),CAST(SUM(total) AS SIGNED) from kh_gitlab_statistical_commits where repository_id=%s AND committer_time>'2023-06-01'" % repo_id[0]
-            cursor.execute(sql_sc_repository_commit)
-            result_commit = cursor.fetchone()
-            project_commit_times = project_commit_times+result_commit[1] #项目代码库提交累加数
-            if result_commit[2] is not None:
-                project_commit_count = project_commit_count+result_commit[2] #项目代码行数提交累加数
-            repo_list.append(repo_id[0])
-
-        project_info['repository_list'] = repo_list
-        project_info['repository_commit_times'] = project_commit_times
-        project_info['repository_commit_total'] = project_commit_count
-
 
         #读取该项目的任务创建
         sql_job = "select count(*) FROM kh_project_function where project_id=%s AND create_time>'2023-06-01'" % projectID
@@ -220,7 +108,7 @@ def get_project_memeber(projectID):
     conn = pymysql.connect(**conn_khan)
     project_info = {}
     member_list = {}
-    sql_members = "select ACCOUNT_,NAME_,DIC.`name` from kh_project_member AS PROJ JOIN kh_dict AS DIC ON PROJ.project_id=%s AND PROJ.`STATUS_`=1 AND PROJ.ROLE_ID = DIC.id" % projectID
+    sql_members = "select ACCOUNT_,NAME_,DIC.`name` from kh_project_member AS PROJ JOIN kh_dict AS DIC ON PROJ.project_id=%s AND PROJ.`STATUS_`=1 AND PROJ.ROLE_ID = DIC.id  ORDER BY DIC.name" % projectID
     try:
         cursor = conn.cursor()
         #读取该项目的项目成员
@@ -228,13 +116,13 @@ def get_project_memeber(projectID):
 
         result = cursor.fetchall()
         for member in result:
-            if not (member[0] in ignore_member):
+            if not (member[2] in ignore_member):
                 member_list[member[0]]=member[2] 
     except Exception as e:
         print(e)
     # 关闭光标对象
     cursor.close()
-    # 关闭数据库连接
+    # 关闭数据库连接 
     conn.close()
     project_info['membercount'] = len(member_list)
     project_info['memberlist'] = member_list
@@ -249,16 +137,19 @@ def get_project_related(projectID):
     try:
         cursor = conn.cursor()
         #读取该项目的版本数据
+        # 版本名称、版本ID 从kh_project_version获取
         sql_depend_id = "select kv.`name`,kv.`id`,kdic.`name` from kh_project_version AS kv JOIN kh_dict as kdic where project_id=%s AND kv.version_type=kdic.id" % projectID
+        
         cursor.execute(sql_depend_id)
         result = cursor.fetchall()
         vers_list = {}
         for version_info in result:
             # 读取版本下的依赖产品配置
+            # 读取项目版本ID、项目名称、项目英文名、项目版本依赖ID以及正式、补丁和升级包版本数据，从kh_project_version_dependency,和 kh_project
+
             sql_version = "select pv.project_version_id,khpro.name,khpro.project_key,pv.depend_project_id,pv.official_version,pv.upgrade_pack,pv.patch_pack FROM kh_project_version_dependency AS pv join kh_project AS khpro ON pv.project_version_id={0} AND khpro.id=pv.depend_project_id".format(version_info[1])
             cursor.execute(sql_version)
             result_version = cursor.fetchall()
-            
             if len(result_version)==0:
                 vers_list[version_info[0]]='' #将为空的版本信息加入字典
             else:
@@ -280,15 +171,24 @@ def get_project_related(projectID):
                         vers_patch = vers_depend[6].split(";&")
                         vers_patch = list(filter(None, vers_patch))
                         vers_depend_list.extend(vers_patch)
+
+
                     # 对查询到的版本ID查询具体版本名称
-                    
                     for vers_key in vers_depend_list:
-                        sql_verskey = "SELECT `name` FROM `khan2_pro`.`kh_project_version` WHERE `project_id` = {0} AND id = {1}".format(vers_depend[3],vers_key)
+                        sql_verskey = "SELECT `name`,`link_url` FROM `khan2_pro`.`kh_project_version` WHERE `project_id` = {0} AND id = {1}".format(vers_depend[3],vers_key)
                         cursor.execute(sql_verskey)
                         result_version_key = cursor.fetchone()
-                        vers_temp_key = (vers_depend[2],vers_depend[1],result_version_key)
-                        vers_depend_key.append(vers_temp_key)
+                        if result_version_key is not None:
+                            # 处理是否有介质判断
 
+                            linktag = ''
+                            if result_version_key[1] is not None and re.match(r"http://192.168.106.56:57880/svn", result_version_key[1]):
+                                linktag = '有介质'
+                            else:
+                                linktag = '无介质'
+                            vers_temp_key = (vers_depend[2],vers_depend[1],linktag,result_version_key[0])
+                            vers_depend_key.append(vers_temp_key)
+                            
                 vers_list[version_info[0]]=vers_depend_key
 
         project_info['verscount'] = len(vers_list)
@@ -303,6 +203,7 @@ def get_project_related(projectID):
     conn.close()
     return project_info
 
+
 def get_project_repository(projectID):
     conn = pymysql.connect(**conn_khan)
     project_info = {}
@@ -310,17 +211,14 @@ def get_project_repository(projectID):
     try:
         cursor = conn.cursor()
         #读取该项目的代码库
-        sql_repository_id = "select repository_id from kh_project__repository where project_id=%s" % projectID
+        sql_repository_id = "select * from kh_project__repository AS pr JOIN kh_gitlab_repository AS gr where pr.project_id=%s AND pr.repository_id=gr.id ORDER BY gr.last_activity_at DESC" % projectID
         cursor.execute(sql_repository_id)
         result = cursor.fetchall()
         repo_list = []
         if len(result)>0:
-            for repo_id in result:
+            for result_repo in result:
                 #通过代码库id查询提交代码次数
-                sql_sc_repository = "SELECT * FROM `khan2_pro`.`kh_gitlab_repository` WHERE `id`=%s " % repo_id[0]
-                cursor.execute(sql_sc_repository)
-                result_repo = cursor.fetchone()
-                repo_info = [result_repo[0],result_repo[5],result_repo[3]]
+                repo_info = [result_repo[2],result_repo[8],result_repo[6],str(result_repo[13])]
                 repo_list.append(repo_info)
 
         project_info['repository_count'] = len(repo_list)
@@ -334,6 +232,38 @@ def get_project_repository(projectID):
     conn.close()
     return project_info
 
+
+# 按部门查询系统和产品代码提交次数 pytype-项目类型，deptname-部门名称，producttype-产品类型（新产品或维护中产品）
+def get_project_codecommit(projectID):
+    conn = pymysql.connect(**conn_khan)
+    project_info = {}
+
+    try:
+        cursor = conn.cursor()
+        #读取该项目的代码库
+        sql_repository_id = "select pr.repository_id from kh_project__repository AS pr JOIN kh_gitlab_repository AS gr where pr.project_id=%s AND pr.repository_id=gr.id and gr.last_activity_at >'2023-01-01 00:00:00' ORDER BY gr.last_activity_at DESC" % projectID
+        cursor.execute(sql_repository_id)
+        result_repoid = cursor.fetchall()
+        repo_list = []
+        if len(result)>0:
+            for result_repo in result_repoid:
+                #通过代码库id查询提交代码次数
+                sql_verskey = "SELECT `name` FROM `khan2_pro`.`kh_project_version` WHERE `project_id` = {0} AND id = {1}".format(vers_depend[3],vers_key)
+                cursor.execute(sql_verskey)
+                result_version_key = cursor.fetchone()
+                repo_info = [result_repo[2],result_repo[8],result_repo[6],str(result_repo[13])]
+                repo_list.append(repo_info)
+
+        project_info['repository_count'] = len(repo_list)
+        project_info['repository_list'] = repo_list
+
+    except Exception as e:
+        print(e)
+    # 关闭光标对象
+    cursor.close()
+    # 关闭数据库连接
+    conn.close()
+    return project_info
 
 # print(json.dumps(get_project_info(1010),indent=4,ensure_ascii=False))
 
