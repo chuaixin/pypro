@@ -8,7 +8,6 @@
 import pymysql
 import sys
 import json
-import pandas as pd
 from prettytable import PrettyTable
 import re
 from khan_config import *

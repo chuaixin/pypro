@@ -11,7 +11,7 @@
 			"file_regex": "^[ ]*File \"(...*?)\", line ([0-9]*)",
 			"name": "Anaconda Python Builder",
 			"selector": "source.python",
-			"shell_cmd": "\"c:/Program Files/Python311/python.exe\" -u \"$file\"",
+			"shell_cmd": "\"/Library/Frameworks/Python.framework/Versions/3.9/bin/python3\" -u \"$file\"",
 		}
 	],
 }
