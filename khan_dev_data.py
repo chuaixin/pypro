@@ -7,6 +7,7 @@
 
 import pymysql
 import sys
+import datetime
 import json
 from prettytable import PrettyTable
 import re
@@ -182,9 +183,9 @@ def get_project_related(projectID):
 
                             linktag = ''
                             if result_version_key[1] is not None and re.match(r"http://192.168.106.56:57880/svn", result_version_key[1]):
-                                linktag = '有介质'
+                                linktag = 'SVN存管'
                             else:
-                                linktag = '无介质'
+                                linktag = '无'
                             vers_temp_key = (vers_depend[2],vers_depend[1],linktag,result_version_key[0])
                             vers_depend_key.append(vers_temp_key)
                             
