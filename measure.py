@@ -19,7 +19,7 @@ pd.set_option('display.unicode.east_asian_width', True)
 # dname = '技术中台支撑部'
 dname = '数字化运营事业部'
 
-pro_type = (1,2)   #1为系统项目，2为产品项目
+pro_type = (2,1)   #1为系统项目，2为产品项目
 
 for ptype in pro_type:
 	pd_data = []
@@ -29,18 +29,18 @@ for ptype in pro_type:
 		field_names = ['项目ID', '部门名称', '项目英文名', '项目中文名', '项目经理', '项目执行状态']
 
 	for dname in dept:
-		print("【项目明细】：\n")
-		project_list = get_project_by_dept(project_type[pro_type],dname)
+		print("\n")
+		project_list = get_project_by_dept(project_type[ptype],dname)
 		# project_list = [['107',"技术中台支撑部","Ultra-LDCP","一站式研发","杜勇","未开始",33,33,11]]
 
-		print("项目数：", len(project_list))
+		print(dname,project_type[ptype],"项目数：", len(project_list))
 
 		for project_info in project_list:
 			# print("项目版本及依赖：",json.dumps(get_project_related(project_info[0]),indent=4,ensure_ascii=False))
 			# 基础项目信息数据
 			pinfo = list(project_info)
 
-			if pro_type==2:
+			if ptype==2:
 				del pinfo[-1]
 				del pinfo[-1]
 				del pinfo[-1]
@@ -81,6 +81,7 @@ for ptype in pro_type:
 			#添加项目信息数据
 			pd_data.extend(result_pinfo)
 
+
 	field_names.extend(['项目成员数','版本数','代码库数','版本','依赖产品英文','依赖产品名称','是否有介质','依赖产品版本'])
 	if ptype==1:
 		dframe_sys = pd.DataFrame(pd_data,columns=field_names,dtype='string')
@@ -95,10 +96,13 @@ time = datetime.datetime.now()
 timestamp = time.strftime("%Y%m%d_%H%M%S")
 doc_name = "./static/"+'basedata_'+timestamp+'.xlsx'
 
-# newdoc = pd.ExcelWriter(doc_name)
-dframe_sys.to_excel(doc_name, sheet_name="系统项目清单" ,index=False)
-dframe_project.to_excel(doc_name, sheet_name="产品项目清单" ,index=False)
+# newdoc = pd.ExcelWriter(doc_name,mode='a')
+# dframe_sys.to_excel(newdoc, sheet_name="系统项目清单" ,index=False)
+# dframe_project.to_excel(newdoc, sheet_name="产品项目清单" ,index=False)
 
+with pd.ExcelWriter(doc_name) as writer:
+    dframe_sys.to_excel(writer, sheet_name='系统项目清单', index=False)
+    dframe_project.to_excel(writer, sheet_name='产品项目清单', index=False)
 
 
 	# print("代码库：",json.dumps(get_project_repository(project_info[0]),indent=4,ensure_ascii=False))
