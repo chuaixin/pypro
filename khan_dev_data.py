@@ -21,9 +21,9 @@ def get_project_by_dept(ptype, deptname=''):
     projecttype = {"系统项目":1, "产品项目":2, "历史项目":4, "其他项目":3}
 
     if deptname:
-        sql_sys = "select id,dept_name,project_key,name,liable_user_name,progress_status,province,trade,customer_abbreviated from kh_project where category={0} and (status=1 or status=2) and dept_name='{1}'".format(projecttype[ptype],deptname)
+        sql_sys = "select dept_name,id,project_key,name,liable_user_name,progress_status,province,trade,customer_abbreviated from kh_project where category={0} and (status=1 or status=2) and dept_name='{1}'".format(projecttype[ptype],deptname)
     else:
-        sql_sys = "select id,dept_name,project_key,name,liable_user_name,progress_status,province,trade,customer_abbreviated from kh_project where category={0} and (status=1 or status=2) order BY dept_name".format(projecttype[ptype])
+        sql_sys = "select dept_name,id,project_key,name,liable_user_name,progress_status,province,trade,customer_abbreviated from kh_project where category={0} and (status=1 or status=2) order BY dept_name".format(projecttype[ptype])
     try:
         cursor = conn.cursor()
         cursor.execute(sql_sys)
@@ -186,7 +186,7 @@ def get_project_related(projectID):
                                 linktag = 'SVN存管'
                             else:
                                 linktag = '无'
-                            vers_temp_key = (vers_depend[2],vers_depend[1],linktag,result_version_key[0])
+                            vers_temp_key = (vers_depend[2],vers_depend[1],result_version_key[0],linktag)
                             vers_depend_key.append(vers_temp_key)
                             
                 vers_list[version_info[0]]=vers_depend_key

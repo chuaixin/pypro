@@ -24,9 +24,9 @@ pro_type = (2,1)   #1为系统项目，2为产品项目
 for ptype in pro_type:
 	pd_data = []
 	if ptype == 1:#系统项目显示省分、客户和简称信息
-		field_names = ['项目ID', '部门名称', '项目英文名', '项目中文名', '项目经理', '项目执行状态', '省分', '客户', '简称']
+		field_names = ['部门名称', '项目ID', '项目英文名', '项目中文名', '项目经理', '项目执行状态', '省分', '客户', '简称']
 	else:
-		field_names = ['项目ID', '部门名称', '项目英文名', '项目中文名', '项目经理', '项目执行状态']
+		field_names = ['部门名称', '项目ID', '项目英文名', '项目中文名', '项目经理', '项目执行状态']
 
 	for dname in dept:
 		print("\n")
@@ -36,7 +36,7 @@ for ptype in pro_type:
 		print(dname,project_type[ptype],"项目数：", len(project_list))
 
 		for project_info in project_list:
-			# print("项目版本及依赖：",json.dumps(get_project_related(project_info[0]),indent=4,ensure_ascii=False))
+			# print("项目版本及依赖：",json.dumps(get_project_related(project_info[1]),indent=4,ensure_ascii=False))
 			# 基础项目信息数据
 			pinfo = list(project_info)
 
@@ -46,17 +46,17 @@ for ptype in pro_type:
 				del pinfo[-1]
 			pinfo[3] = pinfo[3][0:10]
 
-			project_group = get_project_memeber(project_info[0])
+			project_group = get_project_memeber(project_info[1])
 			pinfo.append(project_group['membercount'])
-			project_vers = get_project_related(project_info[0])
+			project_vers = get_project_related(project_info[1])
 			pinfo.append(project_vers['verscount'])
-			project_repo = get_project_repository(project_info[0])
+			project_repo = get_project_repository(project_info[1])
 			pinfo.append(project_repo['repository_count'])
 
 			temp_pinfo=pinfo.copy()
 			result_pinfo = []
 			# 添加版本和依赖数据
-			verslist = get_project_related(project_info[0])
+			verslist = get_project_related(project_info[1])
 			if verslist['verscount']>0:
 				for vers,relatevalue in verslist['relatelist'].items():
 					versdata = [vers]
@@ -82,7 +82,7 @@ for ptype in pro_type:
 			pd_data.extend(result_pinfo)
 
 
-	field_names.extend(['项目成员数','版本数','代码库数','版本','依赖产品英文','依赖产品名称','是否有介质','依赖产品版本'])
+	field_names.extend(['项目成员数','版本数','代码库数','版本','依赖产品英文','依赖产品名称','依赖产品版本','是否有介质'])
 	if ptype==1:
 		dframe_sys = pd.DataFrame(pd_data,columns=field_names,dtype='string')
 		print(dframe_sys)
@@ -103,10 +103,5 @@ doc_name = "./static/"+'basedata_'+timestamp+'.xlsx'
 with pd.ExcelWriter(doc_name) as writer:
     dframe_sys.to_excel(writer, sheet_name='系统项目清单', index=False)
     dframe_project.to_excel(writer, sheet_name='产品项目清单', index=False)
-
-
-	# print("代码库：",json.dumps(get_project_repository(project_info[0]),indent=4,ensure_ascii=False))
-	# print("项目成员：",json.dumps(get_project_memeber(project_info[0]),indent=4,ensure_ascii=False))
-
 
 print("结束\n")
