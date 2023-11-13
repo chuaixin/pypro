@@ -4,17 +4,11 @@
 # @Author  : Your Name (you@example.org)
 # @Link    : http://example.org
 # @Version : $Id$
-import pandas as pd
-from khan_dev_data import *
 
-# 设置 Pandas 显示选项
-pd.set_option('display.max_columns', None)  # 显示所有列
-pd.set_option('display.max_rows', None)  # 显示所有行
-pd.set_option('display.width', None)  # 自动调整列宽
-pd.set_option('display.max_colwidth', None)  # 显示所有单元格的内容
-pd.set_option('display.colheader_justify', 'center')
-pd.set_option('display.unicode.ambiguous_as_wide', True)
-pd.set_option('display.unicode.east_asian_width', True)
+from khan_dev_data import *
+import pdb
+
+pdb.set_trace()  # 设置断点
 
 # dname = '技术中台支撑部'
 dname = '数字化运营事业部'
@@ -36,7 +30,7 @@ for ptype in pro_type:
 		print(dname,project_type[ptype],"项目数：", len(project_list))
 
 		for project_info in project_list:
-			# print("项目版本及依赖：",json.dumps(get_project_related(project_info[1]),indent=4,ensure_ascii=False))
+			print("项目版本及依赖：",json.dumps(get_project_related(project_info[1]),indent=4,ensure_ascii=False))
 			# 基础项目信息数据
 			pinfo = list(project_info)
 
@@ -96,9 +90,6 @@ time = datetime.datetime.now()
 timestamp = time.strftime("%Y%m%d_%H%M%S")
 doc_name = "./static/"+'basedata_'+timestamp+'.xlsx'
 
-# newdoc = pd.ExcelWriter(doc_name,mode='a')
-# dframe_sys.to_excel(newdoc, sheet_name="系统项目清单" ,index=False)
-# dframe_project.to_excel(newdoc, sheet_name="产品项目清单" ,index=False)
 
 with pd.ExcelWriter(doc_name) as writer:
     dframe_sys.to_excel(writer, sheet_name='系统项目清单', index=False)

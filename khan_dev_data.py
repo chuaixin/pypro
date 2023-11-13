@@ -12,6 +12,16 @@ import json
 from prettytable import PrettyTable
 import re
 from khan_config import *
+import pandas as pd
+
+# 设置 Pandas 显示选项
+pd.set_option('display.max_columns', None)  # 显示所有列
+pd.set_option('display.max_rows', None)  # 显示所有行
+pd.set_option('display.width', None)  # 自动调整列宽
+pd.set_option('display.max_colwidth', None)  # 显示所有单元格的内容
+pd.set_option('display.colheader_justify', 'center')
+pd.set_option('display.unicode.ambiguous_as_wide', True)
+pd.set_option('display.unicode.east_asian_width', True)
 
 # ====================================
 # 按部门查询系统和产品项目信息
@@ -241,18 +251,20 @@ def get_project_codecommit(projectID):
     try:
         cursor = conn.cursor()
         #读取该项目的代码库
-        sql_repository_id = "select pr.repository_id from kh_project__repository AS pr JOIN kh_gitlab_repository AS gr where pr.project_id=%s AND pr.repository_id=gr.id and gr.last_activity_at >'2023-01-01 00:00:00' ORDER BY gr.last_activity_at DESC" % projectID
+        sql_repository_id = "select pr.repository_id,gr.http_url_to_repo from kh_project__repository AS pr JOIN kh_gitlab_repository AS gr where pr.project_id=%s AND pr.repository_id=gr.id and gr.last_activity_at >'2023-01-01 00:00:00' ORDER BY gr.last_activity_at DESC" % projectID
         cursor.execute(sql_repository_id)
-        result_repoid = cursor.fetchall()
+        repoid_list = cursor.fetchall()
         repo_list = []
-        if len(result)>0:
-            for result_repo in result_repoid:
+        if len(repoid_list)>0:
+            for repoid,repourl in repoid_list:
                 #通过代码库id查询提交代码次数
-                sql_verskey = "SELECT `name` FROM `khan2_pro`.`kh_project_version` WHERE `project_id` = {0} AND id = {1}".format(vers_depend[3],vers_key)
-                cursor.execute(sql_verskey)
-                result_version_key = cursor.fetchone()
-                repo_info = [result_repo[2],result_repo[8],result_repo[6],str(result_repo[13])]
-                repo_list.append(repo_info)
+                sql_repo_commit = "SELECT repository_id, committer_name,COUNT(commit_id),sum(total) FROM `khan2_pro`.`kh_gitlab_statistical_commits` WHERE `repository_id` = {0} and DATE_FORMAT(committer_time,'%Y') in ('2023') GROUP BY committer_name".format(repoid)
+                cursor.execute(sql_repo_commit)
+                result_repo_commit = cursor.fetchall()
+                if len(result_repo_commit)>0:
+                    for repo_by_member in result_repo_commit:
+                        repo_commit_enumerate = [repo_by_member[0],repourl,repo_by_member[1],repo_by_member[2],str(repo_by_member[3])]
+                        repo_list.append(repo_commit_enumerate)
 
         project_info['repository_count'] = len(repo_list)
         project_info['repository_list'] = repo_list
