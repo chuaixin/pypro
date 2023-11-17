@@ -263,10 +263,11 @@ def get_project_codecommit(projectID):
                 result_repo_commit = cursor.fetchall()
                 if len(result_repo_commit)>0:
                     for repo_by_member in result_repo_commit:
-                        repo_commit_enumerate = [repo_by_member[0],repourl,repo_by_member[1],repo_by_member[2],str(repo_by_member[3])]
+                        repo_commit_enumerate = [repo_by_member[1],repo_by_member[0],repourl,repo_by_member[2],str(repo_by_member[3])]
                         repo_list.append(repo_commit_enumerate)
 
         project_info['repository_count'] = len(repo_list)
+        # sort_repo_list = sorted(repo_list,key= lambda x: x[2])
         project_info['repository_list'] = repo_list
 
     except Exception as e:

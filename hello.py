@@ -1,33 +1,45 @@
-#!/usr/bin/python3
-# filename  hello.py
-#from PyMySQL import
+#类定义
+class people:
+    #定义基本属性
+    name = ''
+    age = 0
+    #定义私有属性,私有属性在类外部无法直接进行访问
+    __weight = 0
+    #定义构造方法
+    def __init__(self,n,a,w):
+        self.name = n
+        self.age = a
+        self.__weight = w
+    def speak(self):
+        print("%s 说: 我 %d 岁。" %(self.name,self.age))
 
-import pymysql
-conn = pymysql.connect(
-    host='localhost',
-    user='root',
-    password='cx007928',
-    database='hellodb',
-    charset='utf8')
+#单继承示例
+class student(people):
+    grade = ''
+    def __init__(self,n,a,w,g):
+        #调用父类的构函
+        people.__init__(self,n,a,w)
+        self.grade = g
+    #覆写父类的方法
+    def speak(self):
+        print("%s 说: 我 %d 岁了，我在读 %d 年级"%(self.name,self.age,self.grade))
 
-try:
-    cur=conn.cursor()
-    # insertsql=insert into TestModel_test(id,name) values ('','jimbo')
-    createsql = '''
-        CREATE TABLE `entries` (
-            `id` int(11) NOT NULL AUTO_INCREMENT,
-            `title` varchar(12) NOT NULL,
-            `text` varchar(12) NOT NULL DEFAULT '请输入',
-            PRIMARY KEY (`id`)
-        );'''
+#另一个类，多重继承之前的准备
+class speaker():
+    topic = ''
+    name = ''
+    def __init__(self,n,t):
+        self.name = n
+        self.topic = t
+    def speak(self):
+        print("我叫 %s，我是一个演说家，我演讲的主题是 %s"%(self.name,self.topic))
 
-    cur.execute( createsql )
-    # conn.commit()
+#多重继承
+class sample(student):
+    a =''
+    def __init__(self,n,a,w,g,t):
+        student.__init__(self,n,a,w,g)
+        speaker.__init__(self,n,t)
 
-    print ("create ok")
-    #print('sucess')
-except Exception as ex:
-    print(ex)
-finally:
-    cur.close()
-    conn.close()
+test = sample("Tim",25,80,4,"Python")
+test.speak()   #方法名同，默认调用的是在括号中排前地父类的方法
