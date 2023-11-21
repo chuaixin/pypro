@@ -8,7 +8,7 @@
 from khan_dev_data import *
 
 
-dname = '数字化运营事业部'
+dname = '技术中台支撑部'
 
 pro_type = (2,1)   #1为系统项目，2为产品项目
 pd_data = []
@@ -43,3 +43,4 @@ with pd.ExcelWriter(doc_name) as writer:
     dframe_commmit.to_excel(writer, sheet_name=dname, index=False)
 
 print(dframe_commmit)
+

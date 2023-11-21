@@ -11,7 +11,18 @@ conn_khan = {
     'user':'khan2_pro',
     'password':'khan2_pro',
     'database':'khan2_pro',
-    'charset':'utf8'}
+    'charset':'utf8'
+    }
+
+
+# 连接本地数据库，创建连接对象connection
+conn_local = {    
+    'host':'localhost',
+    'user':'root',
+    'password':'cx007928',
+    'database':'stock',
+    'charset':'utf8'
+    }
 
 
 #部门信息配置
