@@ -6,7 +6,7 @@
 # @Version : $Id$
 
 from khan_dev_data import *
-import pdb
+
 
 pdb.set_trace()  # 设置断点
 
@@ -30,7 +30,7 @@ for ptype in pro_type:
 		print(dname,project_type[ptype],"项目数：", len(project_list))
 
 		for project_info in project_list:
-			print("项目版本及依赖：",json.dumps(get_project_related(project_info[1]),indent=4,ensure_ascii=False))
+			# print("项目版本及依赖：",json.dumps(get_project_related(project_info[1]),indent=4,ensure_ascii=False))
 			# 基础项目信息数据
 			pinfo = list(project_info)
 
