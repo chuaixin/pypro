@@ -6,15 +6,8 @@
 # @Version : $Id$
 
 # 连接数据库，创建连接对象connection
-conn_khan2 = {    
-	'host':'192.168.95.170',
-    'user':'khan2_pro',
-    'password':'khan2_pro',
-    'database':'khan2_pro',
-    'charset':'utf8'
-    }
 
-conn_khan3 = {    
+conn_khan = {    
 	'host':'192.168.95.170',
     'port':22306,
     'user':'khan3_pro',
