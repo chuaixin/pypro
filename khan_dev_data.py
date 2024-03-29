@@ -29,8 +29,7 @@ class Project_info():
         """
         Purpose:项目属性及相关信息提取 
         """
-        
-        
+        pass
     # end default constructor
 
 
