@@ -24,9 +24,18 @@ pd.set_option('display.unicode.ambiguous_as_wide', True)
 pd.set_option('display.unicode.east_asian_width', True)
 
 # ====================================
+class Project_info():
+    def __init__(self):
+        """
+        Purpose:项目属性及相关信息提取 
+        """
+        pass
+    # end default constructor
+
+
 # 按部门查询系统和产品项目信息
 def get_project_by_dept(ptype, deptname=''):
-    conn = pymysql.connect(**conn_khan3)
+    conn = pymysql.connect(**conn_khan)
     sys_list = []
     projecttype = {"系统项目":1, "产品项目":2, "历史项目":4, "其他项目":3}
 
@@ -52,7 +61,7 @@ def get_project_by_dept(ptype, deptname=''):
 # ====================================
 #项目团队成员及角色信息
 def get_project_memeber(projectID):
-    conn = pymysql.connect(**conn_khan3)
+    conn = pymysql.connect(**conn_khan)
     project_info = {}
     member_list = {}
     sql_members = "select ACCOUNT_,NAME_,DIC.`name` from kh_project_member AS PROJ JOIN kh_dict AS DIC ON PROJ.project_id=%s AND PROJ.`STATUS_`=1 AND PROJ.ROLE_ID = DIC.id  ORDER BY DIC.name" % projectID
@@ -78,7 +87,7 @@ def get_project_memeber(projectID):
 
 # 获取项目版本及版本产品依赖信息
 def get_project_related(projectID):
-    conn = pymysql.connect(**conn_khan3)
+    conn = pymysql.connect(**conn_khan)
     project_info = {}
 
     try:
@@ -152,7 +161,7 @@ def get_project_related(projectID):
 
 # 获取项目版代码库信息
 def get_project_repository(projectID):
-    conn = pymysql.connect(**conn_khan3)
+    conn = pymysql.connect(**conn_khan)
     project_info = {}
 
     try:
@@ -182,7 +191,7 @@ def get_project_repository(projectID):
 
 # 按部门查询系统和产品代码提交次数 pytype-项目类型，deptname-部门名称，producttype-产品类型（新产品或维护中产品）
 def get_project_codecommit(projectID):
-    conn = pymysql.connect(**conn_khan3)
+    conn = pymysql.connect(**conn_khan)
     project_info = {}
 
     try:
@@ -217,7 +226,7 @@ def get_project_codecommit(projectID):
 
 # 获取项目合同信息
 def get_project_performance(projectID):
-    conn = pymysql.connect(**conn_khan3)
+    conn = pymysql.connect(**conn_khan)
     conn_loc = pymysql.connect(**conn_local)
     project_info = {}
     try:
