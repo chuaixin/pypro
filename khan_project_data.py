@@ -7,26 +7,18 @@ class projectinfo:
         #定义基础项目类: 
         self.conn = pymysql.connect(**conn_khan)
         self.cursor = self.conn.cursor()
-
-    def get_prj_baseinfo(self):
-        """
-        Purpose:查询基本信息 
-        """
-        prj_info = {}
         sql_project = "select id,name,project_key,category,status,liable_user_name,liable_user_account,code_storage,dn_name from kh_project where id={0}".format(self.projectID)
         self.cursor.execute(sql_project)
         result = self.cursor.fetchone()
         #项目基本信息属性
-        prj_info['prj_name'] = result[1] #项目名称
-        prj_info['prj_ename'] = result[2] #项目英文名称
-        prj_info['prj_type'] = project_type[result[3]] #项目类型
-        prj_info['prj_status'] = project_status[result[4]] #项目状态
-        prj_info['prj_manager_name'] = result[5] #项目经理姓名
-        prj_info['prj_manager_ename'] = result[6] #项目经理英文名
-        prj_info['prj_codestore'] = code_store[result[7]] #代码存管
-        prj_info['prj_dept'] = result[8] #项目归属部门
-        return prj_info
-    # end def
+        self.prj_name = result[1] #项目名称
+        self.prj_ename = result[2] #项目英文名称
+        self.prj_type = project_type[result[3]] #项目类型
+        self.prj_status = project_status[result[4]] #项目状态
+        self.prj_manager_name = result[5] #项目经理姓名
+        self.prj_manager_ename = result[6] #项目经理英文名
+        self.prj_codestore = code_store[result[7]] #代码存管
+        self.prj_dept = result[8] #项目归属部门
 
     def get_prj_codestore(self):
         """
@@ -117,15 +109,16 @@ class projectinfo:
     
         
 checkpr = projectinfo(107)
-l1 = checkpr.get_prj_baseinfo()
-l2 = checkpr.get_prj_codestore()
-l3 = checkpr.get_prj_contract()
-l4 = checkpr.get_prj_commit_by_person()
 
-print(json.dumps(l1,indent=4,ensure_ascii=False))
+print(checkpr.__dict__)
+l2 = checkpr.get_prj_codestore()
+# l3 = checkpr.get_prj_contract()
+# l4 = checkpr.get_prj_commit_by_person()
+
+
 print(json.dumps(l2,indent=4,ensure_ascii=False))
-print(json.dumps(l3,indent=4,ensure_ascii=False))
-print(json.dumps(l4,indent=4,ensure_ascii=False))
+# print(json.dumps(l3,indent=4,ensure_ascii=False))
+# print(json.dumps(l4,indent=4,ensure_ascii=False))
 # print(l1)
 # print(l2)
 # print(l3)
