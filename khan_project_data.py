@@ -108,15 +108,15 @@ class projectinfo:
         self.conn.close()
     
         
-checkpr = projectinfo(107)
+# checkpr = projectinfo(107)
 
-print(checkpr.__dict__)
-l2 = checkpr.get_prj_codestore()
+# print(checkpr.__dict__)
+# l2 = checkpr.get_prj_codestore()
 # l3 = checkpr.get_prj_contract()
 # l4 = checkpr.get_prj_commit_by_person()
 
 
-print(json.dumps(l2,indent=4,ensure_ascii=False))
+# print(json.dumps(l2,indent=4,ensure_ascii=False))
 # print(json.dumps(l3,indent=4,ensure_ascii=False))
 # print(json.dumps(l4,indent=4,ensure_ascii=False))
 # print(l1)
