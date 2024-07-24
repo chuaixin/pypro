@@ -1,1 +1,619 @@
-{}
+{
+	"auto_complete":
+	{
+		"selected_items":
+		[
+			[
+				"sql_",
+				"sql_loc_contract"
+			],
+			[
+				"cur",
+				"cursor_loc"
+			],
+			[
+				"e",
+				"elif"
+			],
+			[
+				"re",
+				"result_loc"
+			],
+			[
+				"sq",
+				"sql_loc_contract"
+			],
+			[
+				"pr",
+				"project_info"
+			],
+			[
+				"conn_",
+				"conn_loc"
+			],
+			[
+				"c",
+				"conn_local"
+			],
+			[
+				"k",
+				"khan_dev_data"
+			],
+			[
+				"repo",
+				"repoid_list"
+			],
+			[
+				"rep",
+				"repoid"
+			],
+			[
+				"res",
+				"result_repo_commit"
+			],
+			[
+				"proj",
+				"project_list"
+			],
+			[
+				"n",
+				"NMS-IT监控"
+			],
+			[
+				"d",
+				"dframe_project"
+			],
+			[
+				"dfr",
+				"dframe_sys"
+			],
+			[
+				"E",
+				"ExcelWriter"
+			],
+			[
+				"ver",
+				"verslist"
+			],
+			[
+				"pro",
+				"pro_type"
+			],
+			[
+				"st",
+				"str"
+			],
+			[
+				"ver_",
+				"vers_depend_list"
+			],
+			[
+				"vers",
+				"vers_depend_list"
+			],
+			[
+				"r",
+				"result_version"
+			],
+			[
+				"de",
+				"depend_project_id"
+			],
+			[
+				"depend",
+				"depend_project_id"
+			],
+			[
+				"me",
+				"member_list"
+			],
+			[
+				"mem",
+				"member"
+			],
+			[
+				"fo",
+				"for\tFor Loop"
+			],
+			[
+				"f",
+				"for\tFor Loop"
+			],
+			[
+				"sor",
+				"sort_code_dict"
+			],
+			[
+				"so",
+				"sort_job_dict"
+			],
+			[
+				"get",
+				"get_project_info"
+			],
+			[
+				"dept",
+				"deptlist"
+			],
+			[
+				"no",
+				"None"
+			],
+			[
+				"i",
+				"if\tIf Condition"
+			],
+			[
+				"tr",
+				"try\tTry/Except/Else/Finally"
+			],
+			[
+				"project_",
+				"project_status"
+			],
+			[
+				"get_",
+				"get_project_relate_by_dept"
+			],
+			[
+				"prod",
+				"producttype"
+			],
+			[
+				"cn",
+				"conn_khan"
+			],
+			[
+				"det",
+				"deptdict"
+			],
+			[
+				"t",
+				"try\tTry/Except/Else/Finally"
+			],
+			[
+				"for",
+				"for\tFor Loop"
+			],
+			[
+				"deptl",
+				"deptlist"
+			],
+			[
+				"dep",
+				"dept_rep"
+			],
+			[
+				"cr",
+				"createsql"
+			],
+			[
+				"pri",
+				"print_score"
+			],
+			[
+				"S",
+				"Sdudent"
+			]
+		]
+	},
+	"buffers":
+	[
+		{
+			"file": "member_stat.py",
+			"settings":
+			{
+				"buffer_size": 1354,
+				"encoding": "UTF-8",
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"contents": "",
+			"redo_stack":
+			[
+				[
+					10,
+					1,
+					"paste",
+					null,
+					"AQAAAAAAAAAAAAAAAAAAAAAAAAA2AAAAaHR0cHM6Ly93d3cueWNrY2VvLmNvbS95dWVkdS9zaHV5dWFuL2pzb24vaWQvNTIwMS5qc29u",
+					"AQAAAAAAAAABAAAANgAAAAAAAAA2AAAAAAAAAAAAAAAAAPC/"
+				]
+			],
+			"settings":
+			{
+				"buffer_size": 0,
+				"line_ending": "Unix"
+			},
+			"undo_stack":
+			[
+				[
+					4,
+					1,
+					"reindent",
+					null,
+					"AQAAAAAAAAAAAAAAAQAAAAAAAAAAAAAA",
+					"AQAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAPC/"
+				],
+				[
+					6,
+					2,
+					"left_delete",
+					null,
+					"AQAAAAAAAAAAAAAAAAAAAAAAAAABAAAACQ",
+					"AQAAAAAAAAABAAAAAQAAAAAAAAABAAAAAAAAAAAAAAAAAPC/"
+				]
+			]
+		}
+	],
+	"build_system": "",
+	"build_system_choices":
+	[
+	],
+	"build_varint": "",
+	"command_palette":
+	{
+		"height": 0.0,
+		"last_filter": "",
+		"selected_items":
+		[
+			[
+				"Package Control: ",
+				"Package Control: Remove Package"
+			],
+			[
+				"q",
+				"Set Syntax: SQL"
+			],
+			[
+				"",
+				":$ - EOF"
+			]
+		],
+		"width": 0.0
+	},
+	"console":
+	{
+		"height": 405.0,
+		"history":
+		[
+			"print(\"okok\")",
+			"import socket; socket.socket(socket.AF_INET, socket.SOCK_STREAM).connect((\"localhost\", 61586))",
+			"python hello.py",
+			"hello.py"
+		]
+	},
+	"distraction_free":
+	{
+		"menu_visible": true,
+		"show_minimap": false,
+		"show_open_files": false,
+		"show_tabs": false,
+		"side_bar_visible": false,
+		"status_bar_visible": false
+	},
+	"expanded_folders":
+	[
+		"/Users/chuaixin/Desktop/pypro",
+		"/Users/chuaixin/Desktop/pypro/jupyter"
+	],
+	"file_history":
+	[
+		"/Users/chuaixin/Desktop/pypro/.vscode/settings.json",
+		"/Users/chuaixin/Desktop/pypro/jupyter/git_check.ipynb",
+		"/Users/chuaixin/Desktop/pypro/jupyter/git_project_check.ipynb",
+		"/Users/chuaixin/Downloads/invoice_xml_24217000000041920908.xml",
+		"/Users/chuaixin/Downloads/grimmode.txt",
+		"/Users/chuaixin/Desktop/pypro/member_stat.py",
+		"/Users/chuaixin/Desktop/pypro/measure.py",
+		"/Users/chuaixin/Desktop/pypro/khan_effective_stat.py",
+		"/Users/chuaixin/Desktop/pypro/performance.py",
+		"/Users/chuaixin/Desktop/pypro/khan_dev_data.py",
+		"/Users/chuaixin/Desktop/pypro/khan_config.py",
+		"/Users/chuaixin/Desktop/pypro/pandastest.ipynb",
+		"/Users/chuaixin/Desktop/pypro/effective_stat.py",
+		"/Users/chuaixin/Desktop/pypro/game.py",
+		"/Users/chuaixin/Desktop/pypro/demo/output.html",
+		"/Users/chuaixin/Library/Application Support/Sublime Text/Packages/User/Anaconda.sublime-settings",
+		"/Users/chuaixin/Library/Application Support/Sublime Text/Packages/Anaconda/Anaconda.sublime-settings",
+		"/Users/chuaixin/Desktop/pypro/hello.py",
+		"/Users/chuaixin/Desktop/pypro/README.md",
+		"/Users/chuaixin/Desktop/pypro/README.sublime-project",
+		"/Users/chuaixin/Desktop/pypro/demo/tabletest.py",
+		"/Users/chuaixin/Desktop/pypro/static/basedata_20231106_102201.xlsx",
+		"/Users/chuaixin/Desktop/pypro/static/codecommit_20231121_170135.xlsx",
+		"/Users/chuaixin/Desktop/pypro/static/PMOworkreport.xlsx",
+		"/Users/chuaixin/Desktop/pypro/static/【业绩统计分析】合同与产品系统项目对应-汇总-整理20231106.xlsx",
+		"/Users/chuaixin/Desktop/pypro/static/业绩统计分析_20231122_142759.xlsx",
+		"/Users/chuaixin/Desktop/pypro/static/业绩统计分析_云网运营事业部20231122_144551.xlsx",
+		"/Users/chuaixin/Desktop/pypro/static/业绩统计分析_智能运营事业部20231122_143701.xlsx",
+		"/Users/chuaixin/Desktop/pypro/templates/index.html",
+		"/Users/chuaixin/Desktop/pypro/templates/bootstrap-examples/album/index.html",
+		"/Users/chuaixin/Desktop/pypro/templates/bootstrap-examples/album-rtl/index.html",
+		"/Users/chuaixin/Desktop/pypro/templates/bootstrap-examples/assets/brand/bootstrap-logo.svg",
+		"/Users/chuaixin/Desktop/pypro/templates/bootstrap-examples/blog/blog.css",
+		"/Users/chuaixin/Desktop/pypro/templates/bootstrap-examples/blog/blog.rtl.css",
+		"/Users/chuaixin/Desktop/pypro/templates/bootstrap-examples/blog/index.html",
+		"/Users/chuaixin/Desktop/pypro/templates/bootstrap-examples/blog-rtl/index.html",
+		"/Users/chuaixin/Desktop/pypro/templates/bootstrap-examples/carousel/carousel.css",
+		"/Users/chuaixin/Desktop/pypro/templates/bootstrap-examples/carousel/carousel.rtl.css",
+		"/Users/chuaixin/Desktop/pypro/templates/bootstrap-examples/carousel/index.html",
+		"/Users/chuaixin/Desktop/pypro/templates/bootstrap-examples/carousel-rtl/index.html",
+		"/Users/chuaixin/Desktop/pypro/templates/bootstrap-examples/cheatsheet/cheatsheet.css",
+		"/Users/chuaixin/Desktop/pypro/templates/bootstrap-examples/cheatsheet/cheatsheet.js",
+		"/Users/chuaixin/Desktop/pypro/templates/bootstrap-examples/cheatsheet/cheatsheet.rtl.css",
+		"/Users/chuaixin/Desktop/pypro/templates/bootstrap-examples/cheatsheet/index.html",
+		"/Users/chuaixin/Desktop/pypro/templates/bootstrap-examples/cheatsheet-rtl/index.html",
+		"/Users/chuaixin/Desktop/pypro/templates/bootstrap-examples/checkout/checkout.css",
+		"/Users/chuaixin/Desktop/pypro/templates/bootstrap-examples/checkout/checkout.js",
+		"/Users/chuaixin/Desktop/pypro/templates/bootstrap-examples/checkout/index.html",
+		"/Users/chuaixin/Desktop/pypro/templates/bootstrap-examples/checkout-rtl/index.html",
+		"/Users/chuaixin/Desktop/pypro/templates/bootstrap-examples/cover/cover.css",
+		"/Users/chuaixin/Desktop/pypro/templates/bootstrap-examples/cover/index.html",
+		"/Users/chuaixin/Desktop/pypro/templates/bootstrap-examples/dashboard/dashboard.css",
+		"/Users/chuaixin/Desktop/pypro/templates/bootstrap-examples/dashboard/dashboard.js",
+		"/Users/chuaixin/Desktop/pypro/templates/bootstrap-examples/dashboard/dashboard.rtl.css",
+		"/Users/chuaixin/Desktop/pypro/templates/bootstrap-examples/dashboard/index.html",
+		"/Users/chuaixin/Desktop/pypro/templates/bootstrap-examples/dashboard-rtl/dashboard.js",
+		"/Users/chuaixin/Desktop/pypro/templates/bootstrap-examples/dashboard-rtl/index.html",
+		"/Users/chuaixin/Desktop/pypro/templates/bootstrap-examples/dropdowns/dropdowns.css",
+		"/Users/chuaixin/Desktop/pypro/templates/bootstrap-examples/dropdowns/index.html",
+		"/Users/chuaixin/Desktop/pypro/templates/bootstrap-examples/features/features.css",
+		"/Users/chuaixin/Desktop/pypro/templates/bootstrap-examples/features/index.html",
+		"/Users/chuaixin/Desktop/pypro/templates/bootstrap-examples/footers/index.html",
+		"/Users/chuaixin/Desktop/pypro/templates/bootstrap-examples/grid/grid.css",
+		"/Users/chuaixin/Desktop/pypro/templates/bootstrap-examples/grid/index.html",
+		"/Users/chuaixin/Desktop/pypro/templates/bootstrap-examples/headers/headers.css",
+		"/Users/chuaixin/Desktop/pypro/templates/bootstrap-examples/headers/index.html",
+		"/Users/chuaixin/Desktop/pypro/templates/bootstrap-examples/heroes/heroes.css",
+		"/Users/chuaixin/Desktop/pypro/templates/bootstrap-examples/heroes/index.html",
+		"/Users/chuaixin/Desktop/pypro/templates/bootstrap-examples/jumbotron/index.html",
+		"/Users/chuaixin/Desktop/pypro/templates/bootstrap-examples/list-groups/index.html",
+		"/Users/chuaixin/Desktop/pypro/templates/bootstrap-examples/list-groups/list-groups.css",
+		"/Users/chuaixin/Desktop/pypro/templates/bootstrap-examples/masonry/index.html",
+		"/Users/chuaixin/Desktop/pypro/templates/bootstrap-examples/modals/index.html",
+		"/Users/chuaixin/Desktop/pypro/templates/bootstrap-examples/modals/modals.css",
+		"/Users/chuaixin/Desktop/pypro/templates/bootstrap-examples/navbar-bottom/index.html",
+		"/Users/chuaixin/Desktop/pypro/templates/bootstrap-examples/navbar-fixed/index.html",
+		"/Users/chuaixin/Desktop/pypro/templates/bootstrap-examples/navbar-fixed/navbar-fixed.css",
+		"/Users/chuaixin/Desktop/pypro/templates/bootstrap-examples/navbar-static/index.html",
+		"/Users/chuaixin/Desktop/pypro/templates/bootstrap-examples/navbar-static/navbar-static.css",
+		"/Users/chuaixin/Desktop/pypro/templates/bootstrap-examples/navbars/index.html",
+		"/Users/chuaixin/Desktop/pypro/templates/bootstrap-examples/navbars/navbars.css",
+		"/Users/chuaixin/Desktop/pypro/templates/bootstrap-examples/navbars-offcanvas/index.html",
+		"/Users/chuaixin/Desktop/pypro/templates/bootstrap-examples/navbars-offcanvas/navbars-offcanvas.css",
+		"/Users/chuaixin/Desktop/pypro/templates/bootstrap-examples/offcanvas/index.html",
+		"/Users/chuaixin/Desktop/pypro/templates/bootstrap-examples/offcanvas-navbar/index.html",
+		"/Users/chuaixin/Desktop/pypro/templates/bootstrap-examples/offcanvas-navbar/offcanvas-navbar.css",
+		"/Users/chuaixin/Desktop/pypro/templates/bootstrap-examples/offcanvas-navbar/offcanvas-navbar.js",
+		"/Users/chuaixin/Desktop/pypro/templates/bootstrap-examples/pricing/index.html",
+		"/Users/chuaixin/Desktop/pypro/templates/bootstrap-examples/product/index.html",
+		"/Users/chuaixin/Desktop/pypro/templates/bootstrap-examples/product/product.css",
+		"/Users/chuaixin/Desktop/pypro/templates/bootstrap-examples/sidebars/index.html",
+		"/Users/chuaixin/Desktop/pypro/templates/bootstrap-examples/sidebars/sidebars.css",
+		"/Users/chuaixin/Desktop/pypro/templates/bootstrap-examples/sidebars/sidebars.js",
+		"/Users/chuaixin/Desktop/pypro/templates/bootstrap-examples/sign-in/index.html",
+		"/Users/chuaixin/Desktop/pypro/templates/bootstrap-examples/sign-in/sign-in.css",
+		"/Users/chuaixin/Desktop/pypro/templates/bootstrap-examples/starter-template/index.html",
+		"/Users/chuaixin/Desktop/pypro/templates/bootstrap-examples/starter-template/starter-template.css",
+		"/Users/chuaixin/Desktop/pypro/templates/bootstrap-examples/sticky-footer/index.html",
+		"/Users/chuaixin/Desktop/pypro/templates/bootstrap-examples/sticky-footer/sticky-footer.css",
+		"/Users/chuaixin/Desktop/pypro/templates/bootstrap-examples/sticky-footer-navbar/sticky-footer-navbar.css",
+		"/Users/chuaixin/Desktop/pypro/__init__.py",
+		"/Users/chuaixin/Desktop/pypro/templates/bootstrap-examples/sticky-footer-navbar/index.html",
+		"/Users/chuaixin/Desktop/pypro/templates/bootstrap-examples/pricing/pricing.css",
+		"/Users/chuaixin/Library/Application Support/Sublime Text/Packages/SublimeCodeIntel/Default (OSX).sublime-keymap",
+		"/Users/chuaixin/Library/Application Support/Sublime Text/Packages/SublimeCodeIntel/SublimeCodeIntel.sublime-settings",
+		"/Users/chuaixin/Library/Application Support/Sublime Text/Packages/PyDOC/Default (OSX).sublime-keymap",
+		"/Users/chuaixin/Library/Application Support/Sublime Text/Packages/Pylinter/Pylinter.sublime-settings",
+		"/Users/chuaixin/Library/Application Support/Sublime Text/Packages/SublimeCodeIntel/Default (OSX).sublime-mousemap",
+		"/Users/chuaixin/Library/Application Support/Sublime Text/Packages/Pylinter/Default (OSX).sublime-keymap",
+		"/Users/chuaixin/Library/Application Support/Sublime Text/Packages/User/Default (OSX).sublime-keymap",
+		"/Users/chuaixin/Library/Application Support/Sublime Text/Packages/SublimeTmpl/Default (OSX).sublime-keymap",
+		"/Users/chuaixin/Library/Application Support/Sublime Text/Packages/SublimeTmpl/Main.sublime-menu",
+		"/Users/chuaixin/Library/Application Support/Sublime Text/Packages/SublimeREPL/SublimeREPL.sublime-settings",
+		"/Users/chuaixin/Library/Application Support/Sublime Text/Packages/User/SublimeREPL.sublime-settings",
+		"/Users/chuaixin/Desktop/pypro/demo/output.xlsx",
+		"/Users/chuaixin/Desktop/pypro/tempdo.py",
+		"/Users/chuaixin/Desktop/pypro/echart.py",
+		"/Users/chuaixin/Desktop/pypro/dataconfirm.py",
+		"/Users/chuaixin/Desktop/pypro/render.html",
+		"/Users/chuaixin/Desktop/pypro/templates/echart_test.py",
+		"/Users/chuaixin/Desktop/pypro/*REPL* [python]",
+		"/Users/chuaixin/Library/Application Support/Sublime Text/Packages/PyDOC/messages/install.txt",
+		"/Users/chuaixin/Library/Application Support/Sublime Text/Packages/Pandoc/Pandoc.sublime-settings",
+		"/Users/chuaixin/Library/Application Support/Sublime Text/Packages/User/sublime_jedi.sublime-settings",
+		"/Users/chuaixin/Library/Application Support/Sublime Text/Packages/Jedi - Python autocompletion/sublime_jedi.sublime-settings",
+		"/Users/chuaixin/Desktop/pypro/web_show.py",
+		"/Users/chuaixin/Desktop/pypro/flaskdo.py",
+		"/Users/chuaixin/Library/Application Support/Sublime Text/Packages/User/Pylinter.sublime-settings"
+	],
+	"find":
+	{
+		"height": 41.0
+	},
+	"find_in_files":
+	{
+		"height": 122.0,
+		"where_history":
+		[
+		]
+	},
+	"find_state":
+	{
+		"case_sensitive": false,
+		"find_history":
+		[
+		],
+		"highlight": true,
+		"in_selection": false,
+		"preserve_case": false,
+		"regex": true,
+		"replace_history":
+		[
+		],
+		"reverse": false,
+		"scrollbar_highlights": true,
+		"show_context": true,
+		"use_buffer2": true,
+		"use_gitignore": true,
+		"whole_word": false,
+		"wrap": true
+	},
+	"groups":
+	[
+		{
+			"sheets":
+			[
+				{
+					"buffer": 0,
+					"file": "member_stat.py",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 1354,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								0,
+								0
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/Python/Python.sublime-syntax",
+							"tab_size": 4,
+							"translate_tabs_to_spaces": false
+						},
+						"translation.x": 0.0,
+						"translation.y": 229.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 1,
+					"stack_multiselect": false,
+					"type": "text"
+				},
+				{
+					"buffer": 1,
+					"selected": true,
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 0,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								0,
+								0
+							]
+						],
+						"settings":
+						{
+							"auto_name": "",
+							"syntax": "Packages/Text/Plain text.tmLanguage"
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 0,
+					"stack_multiselect": false,
+					"type": "text"
+				}
+			]
+		}
+	],
+	"incremental_find":
+	{
+		"height": 41.0
+	},
+	"input":
+	{
+		"height": 50.0
+	},
+	"layout":
+	{
+		"cells":
+		[
+			[
+				0,
+				0,
+				1,
+				1
+			]
+		],
+		"cols":
+		[
+			0.0,
+			1.0
+		],
+		"rows":
+		[
+			0.0,
+			1.0
+		]
+	},
+	"menu_visible": true,
+	"output.find_results":
+	{
+		"height": 0.0
+	},
+	"pinned_build_system": "Packages/Python/Python.sublime-build",
+	"project": "README.sublime-project",
+	"replace":
+	{
+		"height": 78.0
+	},
+	"save_all_on_build": false,
+	"select_file":
+	{
+		"height": 0.0,
+		"last_filter": "",
+		"selected_items":
+		[
+			[
+				"",
+				"__init__.py"
+			]
+		],
+		"width": 0.0
+	},
+	"select_project":
+	{
+		"height": 500.0,
+		"last_filter": "",
+		"selected_items":
+		[
+		],
+		"width": 380.0
+	},
+	"select_symbol":
+	{
+		"height": 0.0,
+		"last_filter": "",
+		"selected_items":
+		[
+		],
+		"width": 0.0
+	},
+	"selected_group": 0,
+	"settings":
+	{
+	},
+	"show_minimap": true,
+	"show_open_files": true,
+	"show_tabs": true,
+	"side_bar_visible": true,
+	"side_bar_width": 266.0,
+	"status_bar_visible": true,
+	"template_settings":
+	{
+	}
+}
