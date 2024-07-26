@@ -1,0 +1,3 @@
+([('qt_test',
+   '/Users/chuaixin/Desktop/pypro/manga/dist/qt_test',
+   'EXECUTABLE')],)
