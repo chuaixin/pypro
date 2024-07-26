@@ -1,6 +1,16 @@
 import os
 from PIL import Image
 
+directory = './manga/stack/'  # 替换为实际的目录路径
+#检索目录中的所有文件及目录
+image_paths = []
+for root, dirs, files in os.walk(directory):
+    for file in files:
+        image_paths.append(os.path.join(root, file))    
+
+
+print(image_paths)  
+
 def get_image_paths(directory):
     image_paths = []
     # 遍历目录中的所有文件
@@ -16,12 +26,5 @@ def get_image_paths(directory):
     return image_paths
 
 # 使用示例
-directory = './manga/stack/'  # 替换为实际的目录路径
-image_paths = get_image_paths(directory)
-
-# 打印所有找到的图片路径
-for path in image_paths:
-    im = Image.open(path)  # 导入图片 fp：图片路径
-    im.show()  # 展示图片
 
 
